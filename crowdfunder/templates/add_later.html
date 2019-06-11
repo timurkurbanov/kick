@@ -1,0 +1,7 @@
+<form class="search-bar" action="{% url 'crowdfunder_search' %}" method="get">
+        <label for="picture-search">
+            <span>search:</span>
+            <input type="search" id="crowdfunder-search" name="query" value="{{ query }}"/>
+        </label>
+        <input type="submit" value="Search" />
+</form>

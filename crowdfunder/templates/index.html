@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<main class="home-main">
+    <h2>FEATURED PROJECTS</h2>
+    <h3>{{ success_rate }}% of projects site wide have been successfully funded!</h3>
+    {% for project in projects %}
+        <div class="project-description">
+        <a href="{% url 'project_detail' id=project.id %}" class="project-detail-link"><h2 class="project-title">{{ project.title }}</h2></a>
+        <h3 class="project-owner">By: {{ project.owner }}</h3>
+        <h3 class="project-description">{{ project.description }}</h3>
+        <div class="project-wrapper">
+            <img src="{{ project.picture }}" alt="{{ project.title }}" />
+        </div>
+    {% endfor %}
+</main>
+{% endblock %}

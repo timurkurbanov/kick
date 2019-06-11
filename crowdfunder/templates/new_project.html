@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+<form class="project-form" action="{% url 'create_project' %}" method="post">
+    {% csrf_token %}
+    {{article_form.as_p}}
+<input type="submit" name="project-create" value="Post Project">
+</form>
+{% endblock %}

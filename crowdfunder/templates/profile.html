@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+<h1>Profile for {{ user.username }}</h1>
+{% load static %}
+
+
+{% block content %}
+<link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css">
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+
+
+<div class="jumbotron">
+        <div class="alert alert-dismissible alert-success">
+<h1>Profile for {{ user.username }}</h1>
+            </div>
+<h2 class="text-secondary">Owned Projects</h2>
+
+<ul class="list-group">
+    {% for project in owned_projects %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{project.title}} has
+            {{project.number_of_backers}} backers and
+            ${{project.amount_funded}} was funded for this project so far.
+                {% if project.amount_funded >= project.funding_goal %}
+                <div class="alert alert-dismissible alert-danger">
+                    {{project.title}} met the funding target! Congratulation!
+                    </div>
+                {% else %}
+                    {{project.title}} hasn't meet the fund target.
+                {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+
+<p class="alert alert-dismissible alert-warning">{{funded_count}} project(s) have been funded successfully.</p>
+
+<h2 class="text-danger">Projects Donated To</h2>
+<ul class="list-group">
+    {% for donation in donations %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            ${{donation.donation_amount}} was donated to {{donation.project}}.
+        </li>
+    {% endfor %}
+</ul>
+</div>
+
+{% endblock %}

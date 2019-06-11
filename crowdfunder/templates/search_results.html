@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<main class="search-results">
+    <h3>Results: {{ projects|length }}</h3>
+    <ul class="projects-list">
+        {% for project in projects %}
+        <li class="project-item">
+            <h2 class="project-title">{{ project.title }}</h2>
+            <h3 class="project-owner">By: {{ project.owner }}</h3>
+            <h3 class="project-description">{{ project.description|truncatechars:100 }}</h3>
+            <img src="{{ project.picture }}" alt="{{ project.title }}" />
+        </li>
+        {% endfor %}
+    </ul>
+</main>
+
+{% endblock %}

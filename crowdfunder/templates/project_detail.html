@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main>
+    <section class="project-info">
+        <h2>{{ project.title }}</h2>
+        {% if project.is_past_due %}
+        <h3>This project did not meet it's goal of ${{ project.funding_goal }} by {{ project.end_date }}</h3>
+        {% else %}
+        <h3>This project has {{  project.days_until_due  }} days to reach it's ${{ project.funding_goal }} goal</h3>
+        {% endif %}
+        <h3>Started by: {{ project.owner.username }}</h3>
+        <ul class="project-stats">
+            <li>${{ project.amount_funded }} raised</li>
+            <li>{{ project.number_of_backers }} backers</li>
+        </ul>
+        {% if existing_donation %}
+        <p>You've donated to this project before!</p>
+        {% endif %}
+        <a href="{% url 'donate' id=project.id %}">Make a donation</a>
+        <a href="{% url 'projects_by_owner' id=project.owner.id %}">More projects by {{ project.owner.username }}</a>
+        <img src="{{ project.picture }}" alt="">
+        <div class="description-body">
+            {{ project.description|linebreaks }}
+        </div>
+
+    </section>
+
+    <section class="rewards">
+        <h3>Rewards:</h3>
+
+        {% if user == project.owner %}
+            <a href="{% url 'add_reward' id=project.id %}" class="reward-link">Add a reward to your project</a>
+        {% endif %}
+        <ul class="rewards-container">
+            {% for reward in project.rewards.all %}
+            <li class="reward-item">
+                <h4>{{ reward.name }}</h4>
+                <p>{{ reward.description }}</p>
+                <p><strong>Rewarded for ${{ reward.donation_value }}</strong></p>
+                {% if user == project.owner %}
+                <p><em>this reward has been achieved {{ reward.donations.count }} times</em></p>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section class="project-comments">
+        <h3>Comments:</h3>
+        <form method="POST" class="comment-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Add your message</button>
+        </form>
+        <ul class="comment_container">
+            {% for comment in project.comments.all %}
+            <li>{{ comment.message|linebreaks }}</li>
+            <ul class="comment-details">
+                <li>{{ comment.user.username }}</li>
+            </ul>
+            {% endfor %}
+        </ul>
+    </section>
+    
+</main>
+{% endblock %}

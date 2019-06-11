@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+    <title>Crowdfunder</title>
+</head>
+<body>
+            <a  href="{% url 'home' %}">Crowdfunder</a>
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'create_project' %}" role="button">Start a new project</a>
+            <a  href="{% url 'logout' %}" role="button">Sign out</a>
+            {% else %}
+            <a href="{% url 'login' %}" role="button">Sign in</a>
+            <a  href="{% url 'signup' %}" role="button">New User</a>
+            {% endif %}
+
+            <a  href="{% url 'profile_list' %}" role="button">List of Profiles</a>
+        </nav>
+        <div class="category-nav">
+            <ul id="category">
+                <li>{% block category-comics %}<a href="{% url 'category' cat='comics' %}">Comics</a>{% endblock %}</li>
+                <li>{% block category-tech %}<a href="{% url 'category' cat='tech' %}">Tech</a>{% endblock %}</li>
+                <li>{% block category-food %}<a href="{% url 'category' cat='food' %}">Food</a>{% endblock %}</li>
+                <li>{% block category-games %}<a href="{% url 'category' cat='games' %}">Games</a>{% endblock %}</li>
+                <li>{% block category-music %}<a href="{% url 'category' cat='music' %}">Music</a>{% endblock %}</li>
+            </ul>
+        </div>
+        <div class="search-container">
+            <form action="{% url 'search_results' %}" method="GET">
+                <label for="project-search">
+                    <span>Search:</span>
+                    <input
+                    type="search"
+                    id="project-search"
+                    name="query"
+                    {% if query %}
+                        value="{{ query }}"
+                    {% endif %}
+                    />
+                </label>
+                <input type="submit" value="Search" />
+            </form>
+        </div>
+    </header>
+    <main>
+        {% block content %}
+
+        {% endblock %}
+        </div>
+    </main>
+    <footer> Copyright Bitmaker Labs </footer>
+</body>
+</html>

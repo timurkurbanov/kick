@@ -34,7 +34,7 @@ urlpatterns = [
     path('category/<slug:cat>/', category, name="category"),
     path('owner/<int:id>/', projects_by_owner, name="projects_by_owner"),
     path('results/', search_results, name="search_results"),
-    url(r'^auth/', include('social_django.urls', namespace='social')),  # <- Here
+    url(r'^auth/', include('social_django.urls', namespace='social')), 
     url(r'^$', home, name='home'),
     path('profile_list/', profile_list, name="profile_list"),
 ]

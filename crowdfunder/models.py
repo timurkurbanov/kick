@@ -4,9 +4,6 @@ from django.db.models import Sum
 
 from datetime import date
 
-
-
-
 CATEGORY_CHOICES = (
     ('tech','tech'),
     ('comics', 'comics'),

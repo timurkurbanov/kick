@@ -127,8 +127,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '141657733370-nkjtdp5qrcghtn8q873uiluqnaja9mhj.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'TUnOug7pp-Ndf8WLUNSGk03G'
+# Super Hacky "Dot-Env" (Don't use in production - yet!)
+import json
+secret_path = os.path.join(BASE_DIR, 'client_id.json')
+with open(secret_path, 'r') as f:
+    env = json.load(f)
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env['web']['client_id']
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env['web']['client_secret']
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'

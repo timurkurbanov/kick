@@ -1,14 +1,40 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Sign In</h2>
-  <form action="{% url 'login' %}" method='POST'>
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Login">
+
+{% load static %}
+
+<style>
+    input[type=text] {
+    background-image: url("{% static 'icons/user-regular.svg' %}") !important;
+    background-position: 15px 20px;
+    background-repeat: no-repeat;
+    padding-left: 4em;
+  }
+  input[type=password] {
+    background-image: url("{% static 'icons/fingerprint-solid.svg' %}") !important;
+    background-position: 15px 20px;
+    background-repeat: no-repeat;
+    padding-left: 4em;
+}
+</style>
+
+
+<div class="modal">
+  <div class="social-logins">
+    <div class="google-login">
+      <a href="{% url 'social:begin' 'google-oauth2' %}">
+          <img class="social-icons" src="{% static 'google-brands.svg' %}" alt="google icon">
+        Log in with Google
+      </a>
+    </div>
+    <p>or</p>
+  </div>
+  <form action="{% url 'login' %}" method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+  <input type="submit" value="Login">
   </form>
-  <br>
-  <p><strong>-- OR --</strong></p>
-  <a href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a><br>
-  
+</div>
+
 {% endblock %}

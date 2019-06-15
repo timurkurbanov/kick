@@ -8,6 +8,8 @@ from django.contrib.auth.forms import UserCreationForm
 from crowdfunder.forms import LoginForm
 from .models import *
 from .forms import *
+import requests
+
 
 def home(request):
     featured_projects = Project.objects.all().order_by('-id')[:9]
